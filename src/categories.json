@@ -1,0 +1,15 @@
+[
+    "tech",
+    "academics",
+    [
+        "algorithms",
+        "gamedev",
+        "academics2",
+        [
+            "algorithms2",
+            "gamedev2"
+        ]
+    ],
+    "notes",
+    "random"
+]

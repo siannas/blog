@@ -1,5 +1,6 @@
 const path = require(`path`)
 const { createFilePath } = require(`gatsby-source-filesystem`)
+const fetch = require(`node-fetch`)
 
 exports.createPages = async ({ graphql, actions, reporter }) => {
   const { createPage } = actions
@@ -59,16 +60,53 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
 }
 
 exports.onCreateNode = ({ node, actions, getNode }) => {
-  const { createNodeField } = actions
+  const { createNodeField, createNode } = actions
 
   if (node.internal.type === `MarkdownRemark`) {
-    const value = createFilePath({ node, getNode })
+    // menentukan path directory markdown berasal
+    const slug = createFilePath({ node, getNode })
+    const pattern = /([^-\/]+)-([^-]+)-([^-]+)-([^\r\n]*)?/
+    const match = slug.match(pattern)
+    if (match !== null) {
+      const year = match[1]
+      const month = match[2]
+      const day = match[3]
+      const filename = match[4]
+      const date = new Date(year, month - 1, day)
+      var dateStr =date.toJSON()
+      
+      createNodeField({
+        name: `date`,
+        node,
+        value: dateStr,
+      })
 
-    createNodeField({
-      name: `slug`,
-      node,
-      value,
-    })
+      createNodeField({
+        name: `slug`,
+        node,
+        value: `/blog/${filename}`,
+      })
+
+      // createNode({
+      //   // Data for the node.
+      //   field1: `cobabaobo`,
+      //   field2: 10,
+      //   field3: true,
+      //   id: `tag-1`,
+      //   parent: null,
+      //   children: [],
+      //   internal: {
+      //     type: `tag`,
+      //     contentDigest:`cobas`
+      //   }
+      // })
+    } else {
+      createNodeField({
+        name: `slug`,
+        node,
+        value: slug,
+      })
+    }
   }
 }
 
@@ -106,6 +144,8 @@ exports.createSchemaCustomization = ({ actions }) => {
       title: String
       description: String
       date: Date @dateformat
+      category: String
+      tags: [String]
     }
 
     type Fields {
@@ -113,3 +153,104 @@ exports.createSchemaCustomization = ({ actions }) => {
     }
   `)
 }
+
+const categories = require(`./src/categories.json`)
+
+exports.sourceNodes = async ({ actions, createNodeId, createContentDigest }) => {
+  const { createNode, createParentChildLink } = actions
+
+  //Create All Categories
+  //iterate over categories array
+  let level=0, x = 0
+  let x2 = [], temparr = [], nodeStack = []
+  let curNode = null
+  let currarr = categories
+  while(level>=0){
+    if(typeof currarr[x] === 'undefined'){
+        level--
+        x = x2.pop()+1
+        currarr=temparr.pop()
+        nodeStack.pop()
+        continue
+    }
+    if(Array.isArray(currarr[x])){
+        level++
+        temparr.push(currarr)
+        currarr=currarr[x]
+        x2.push(x)
+        nodeStack.push(curNode)
+        x=0
+    }
+    let nodeObj = {
+      // Data for the category node.
+      id: `category-`+String(level)+`-`+String(x),
+      parent: !level ? null : nodeStack[nodeStack.length-1].id,
+      internal: {
+        type: `Category`,
+        contentDigest: currarr[x]
+      }
+    }
+    createNode(nodeObj)
+    if(level) createParentChildLink({ parent: nodeStack[nodeStack.length-1], child: nodeObj }) 
+    curNode = nodeObj   
+    x++
+  }
+
+}
+
+// exports.createResolvers = ({ createResolvers }) => {
+//   const resolvers = {
+//     Query: {
+//       allTags: {
+//         type: [`tag`],
+//         resolve: (source, args, context, info) => {
+//           const posts = context.nodeModel.getAllNodes({ type: `tag` })
+//           // const recentPosts = posts.filter(
+//           //   post => post.publishedAt > Date.UTC(2018, 0, 1)
+//           // )
+//           return posts
+//         }
+//       }
+//     }
+//   }
+//   createResolvers(resolvers)
+// }
+
+// exports.sourceNodes = async ({ actions, createNodeId, createContentDigest }) => {
+//   const { createNode } = actions
+
+//   // get data from GitHub API at build time
+//   const result = await fetch(`https://api.github.com/users/siannas/repos`)
+//   const resultData = await result.json()
+//   // create node for build time data example in the docs
+  
+//   // https://api.github.com/repos/siannas/nama_repo/contents/README.md
+
+//   resultData.forEach(res => {
+//     let content = null;
+//     try {
+//       content_raw = await fetch(res.url+`/contents/README.md`)
+//       content = atob(content_raw.content)               //decode base64 conten
+//     } catch (error) {
+//       // if (error.name === 'AbortError') {
+//       // 	console.log('request was aborted');
+//       // }
+//     }
+    
+//     createNode({
+//       // nameWithOwner and url are arbitrary fields from the data
+//       nameWithOwner: res.full_name,
+//       // url: resultData.html_url,
+//       url: res[`html_url`],
+//       content: content,
+//       // required fields
+//       id: `my-repo-`+res.id,
+//       parent: null,
+//       children: [],
+//       internal: {
+//         type: `repos`,
+//         contentDigest: createContentDigest(resultData),
+//       },
+//     })
+//   });
+// }

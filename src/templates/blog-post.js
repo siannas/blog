@@ -3,6 +3,7 @@ import { Link, graphql } from "gatsby"
 
 import Bio from "../components/bio"
 import Layout from "../components/layout"
+import Sidebar from "../components/sidebar"
 import Seo from "../components/seo"
 
 const BlogPostTemplate = ({ data, location }) => {
@@ -12,6 +13,7 @@ const BlogPostTemplate = ({ data, location }) => {
 
   return (
     <Layout location={location} title={siteTitle}>
+      <Sidebar/>
       <Seo
         title={post.frontmatter.title}
         description={post.frontmatter.description || post.excerpt}
@@ -30,6 +32,11 @@ const BlogPostTemplate = ({ data, location }) => {
           itemProp="articleBody"
         />
         <hr />
+        <p className="tags" id="tags">Tags: 
+          {!post.frontmatter.tags ? '-' : post.frontmatter.tags.map(tag => {
+            return (<Link to="#tags" key={tag}>{tag}</Link>)
+          })}
+        </p>
         <footer>
           <Bio />
         </footer>
@@ -85,6 +92,8 @@ export const pageQuery = graphql`
         title
         date(formatString: "MMMM DD, YYYY")
         description
+        category
+        tags
       }
     }
     previous: markdownRemark(id: { eq: $previousPostId }) {
