@@ -60,7 +60,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
 }
 
 exports.onCreateNode = ({ node, actions, getNode }) => {
-  const { createNodeField, createNode } = actions
+  const { createNodeField, createParentChildLink } = actions
 
   if (node.internal.type === `MarkdownRemark`) {
     // menentukan path directory markdown berasal
@@ -87,19 +87,8 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
         value: `/blog/${filename}`,
       })
 
-      // createNode({
-      //   // Data for the node.
-      //   field1: `cobabaobo`,
-      //   field2: 10,
-      //   field3: true,
-      //   id: `tag-1`,
-      //   parent: null,
-      //   children: [],
-      //   internal: {
-      //     type: `tag`,
-      //     contentDigest:`cobas`
-      //   }
-      // })
+      // let categoryNode = getNode('category-0-0')
+      // createParentChildLink({ parent: categoryNode , child: node })       
     } else {
       createNodeField({
         name: `slug`,
@@ -151,6 +140,11 @@ exports.createSchemaCustomization = ({ actions }) => {
     type Fields {
       slug: String
     }
+
+    type Category implements Node {
+      name: String
+      pagechildren: [MarkdownRemark]
+    }
   `)
 }
 
@@ -183,7 +177,8 @@ exports.sourceNodes = async ({ actions, createNodeId, createContentDigest }) => 
     }
     let nodeObj = {
       // Data for the category node.
-      id: `category-`+String(level)+`-`+String(x),
+      id: createNodeId(`category-`+String(level)+`-`+String(x)) ,
+      name: currarr[x],
       parent: !level ? null : nodeStack[nodeStack.length-1].id,
       internal: {
         type: `Category`,
@@ -199,15 +194,42 @@ exports.sourceNodes = async ({ actions, createNodeId, createContentDigest }) => 
 }
 
 // exports.createResolvers = ({ createResolvers }) => {
+//   // const resolvers = {
+//   //   Query: {
+//   //     allTags: {
+//   //       type: [`Category`],
+//   //       resolve: (source, args, context, info) => {
+//   //         const posts = context.nodeModel.getAllNodes({ type: `Category` })
+//   //         // const recentPosts = posts.filter(
+//   //         //   post => post.publishedAt > Date.UTC(2018, 0, 1)
+//   //         // )
+//   //         return posts
+//   //       }
+//   //     }
+//   //   }
+//   // }
 //   const resolvers = {
 //     Query: {
-//       allTags: {
-//         type: [`tag`],
+//       // getMarkdownRemarkByCategory: {
+//       //   type: [`MarkdownRemark`],
+//       //   args: {
+//       //     name: {
+//       //       type: "String!",
+//       //       defaultValue: "uncategorized",
+//       //     }
+//       //   },
+//       //   resolve: (source, args, context, info) => {
+//       //     const posts = context.nodeModel.getAllNodes({ type: `MarkdownRemark` })
+//       //     const relatedPosts = posts.filter(
+//       //       post => post.frontmatter.category == args.name
+//       //     )
+//       //     return relatedPosts
+//       //   }
+//       // }
+//       getAllMarkdownRemark: {
+//         type: [`MarkdownRemark`],
 //         resolve: (source, args, context, info) => {
-//           const posts = context.nodeModel.getAllNodes({ type: `tag` })
-//           // const recentPosts = posts.filter(
-//           //   post => post.publishedAt > Date.UTC(2018, 0, 1)
-//           // )
+//           const posts = context.nodeModel.getAllNodes({ type: `MarkdownRemark` })
 //           return posts
 //         }
 //       }

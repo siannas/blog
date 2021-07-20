@@ -1,5 +1,5 @@
 import * as React from "react"
-import { StaticQuery, graphql } from "gatsby"
+import { StaticQuery, graphql, Link } from "gatsby"
 
 //convert query result to dictionary object
 const CategoriesToDict = (obj) => {
@@ -14,20 +14,42 @@ const CategoriesToDict = (obj) => {
   return result
 }
 
+const SidebarPostList = ({data, ...props}) => {
+  let useUlTag = props.withUlTag || true
+  if(data.length && useUlTag){
+    return (<ul>
+      {data.map(post=> <li key={post.fields.slug}>
+            <Link to={post.fields.slug}>{post.frontmatter.title}</Link>
+          </li>)}
+    </ul>)
+  }else if(data.length){
+    return (<>
+      {data.map(post=> <li key={post.fields.slug}>
+            <Link to={post.fields.slug}>{post.frontmatter.title}</Link>
+          </li>)}
+    </>)
+  }else{
+    return (<></>)
+  }
+}
+
 const SidebarContent = ({data}) => {
   let categories = CategoriesToDict(data.allCategory.edges)
+  let posts = data.allMarkdownRemark.nodes
 
   //category renderer using recursive method
-  const CreateCategoryElement = ({childId}) => {
+  const CreateCategoryElement = ({childId, ...props}) => {
     let c = categories[childId]
+    let filteredPost = posts.filter(post => post.frontmatter.category===c.name)
     if(c.children !== null){      
       return (<li>{c.name}
         <ul>
           {c.children.map(child => <CreateCategoryElement key={child.id} childId={child.id} />)}
+          <SidebarPostList withUlTag={false} data={filteredPost} />
         </ul>
       </li>)
     }else{
-      return (<li>{c.name}</li>)
+      return (<li>{c.name}<SidebarPostList data={filteredPost} /></li>)
     }
   }
 
@@ -46,7 +68,7 @@ const Sidebar = ( props ) => {
     <StaticQuery
       query={graphql`
         query {
-          allCategory {
+          allCategory(sort: {fields: name}){
             edges {
               node {
                 id
@@ -59,6 +81,18 @@ const Sidebar = ( props ) => {
                 internal {
                   contentDigest
                 }
+              }
+            }
+          }
+          allMarkdownRemark {
+            nodes {
+              id
+              fields {
+                slug
+              }
+              frontmatter {
+                title
+                category
               }
             }
           }
