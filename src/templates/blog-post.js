@@ -1,5 +1,6 @@
 import * as React from "react"
 import { Link, graphql } from "gatsby"
+import { GatsbyImage, getImage } from "gatsby-plugin-image"
 
 import Bio from "../components/bio"
 import Layout from "../components/layout"
@@ -10,6 +11,7 @@ const BlogPostTemplate = ({ data, location }) => {
   const post = data.markdownRemark
   const siteTitle = data.site.siteMetadata?.title || `Title`
   const { previous, next } = data
+  const featuredImage = data.featuredImage ? getImage(data.featuredImage) : null
 
   return (
     <Layout location={location} title={siteTitle}>
@@ -24,6 +26,7 @@ const BlogPostTemplate = ({ data, location }) => {
         itemType="http://schema.org/Article"
       >
         <header>
+          {featuredImage ? <GatsbyImage image={featuredImage} alt="featuredImage" /> : ''}
           <h1 itemProp="headline">{post.frontmatter.title}</h1>
           <p>{post.frontmatter.date}</p>
         </header>
@@ -78,7 +81,19 @@ export const pageQuery = graphql`
     $id: String!
     $previousPostId: String
     $nextPostId: String
+    $dir: String
   ) {
+    featuredImage: file(relativeDirectory: {eq: $dir },name: {eq:"featured-image"}) {
+      id
+      name
+      relativeDirectory
+			childImageSharp {
+       gatsbyImageData(
+         width: 1200
+         formats: [AUTO]
+       )
+     }
+    }
     site {
       siteMetadata {
         title

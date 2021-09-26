@@ -20,6 +20,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
             id
             fields {
               slug
+              dir
             }
           }
         }
@@ -53,6 +54,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
           id: post.id,
           previousPostId,
           nextPostId,
+          dir: post.fields.dir
         },
       })
     })
@@ -60,13 +62,14 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
 }
 
 exports.onCreateNode = ({ node, actions, getNode }) => {
-  const { createNodeField, createParentChildLink } = actions
+  const { createNodeField } = actions
 
   if (node.internal.type === `MarkdownRemark`) {
     // menentukan path directory markdown berasal
     const slug = createFilePath({ node, getNode })
     const pattern = /([^-\/]+)-([^-]+)-([^-]+)-([^\r\n]*)?/
     const match = slug.match(pattern)
+    const dir = slug.replace(/\//g,"")
     if (match !== null) {
       const year = match[1]
       const month = match[2]
@@ -87,8 +90,12 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
         value: `/blog/${filename}`,
       })
 
-      // let categoryNode = getNode('category-0-0')
-      // createParentChildLink({ parent: categoryNode , child: node })       
+      createNodeField({
+        name: `dir`,
+        node,
+        value: dir,
+      })
+
     } else {
       createNodeField({
         name: `slug`,
