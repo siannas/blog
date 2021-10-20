@@ -1,0 +1,22 @@
+/*******************************
+        Global Overrides
+*******************************/
+
+.ui.my-primary{
+    background-color: @primaryColor;
+    color: white!important;
+}
+
+.ui.my-collapsible{
+    opacity: 0;
+    visibility: hidden;
+    max-height: 0;
+    transition: opacity 0.2s, visibility 0.2s, max-height 0.2s;
+}
+
+.ui.my-collapsible.show{
+    visibility: visible;
+    opacity: 1;
+    max-height: 1024px;
+    transition: opacity 0.4s, visibility 0.4s, max-height 0.8s;
+}

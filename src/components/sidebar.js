@@ -33,31 +33,35 @@ const SidebarPostList = ({data, ...props}) => {
   }
 }
 
+//category renderer using recursive method
+const CreateCategoryElement = ({posts, categories, childId, ...props}) => {
+  let [show, setShow] = React.useState(false);
+
+  let c = categories[childId]
+  let filteredPost = posts.filter(post => post.frontmatter.category===c.name)
+  if(c.children !== null){      
+    return (<>
+      <Link to="#" className="item" onClick={()=>setShow(!show)}><i className={"angle icon " + (show?"down":"left")  }></i>{c.name}</Link>
+      <div className={show ? "ui my-collapsible show" : "ui my-collapsible"}>
+        {c.children.map(child => <CreateCategoryElement categories={categories} posts={posts} key={child.id} childId={child.id} />)}
+        <SidebarPostList withUlTag={false} data={filteredPost} />
+      </div>
+    </>)
+  }else{
+    return (<><Link to="#" className="item">{c.name}</Link><SidebarPostList data={filteredPost} /></>)
+  }
+}
+
 const SidebarContent = ({data}) => {
   let categories = CategoriesToDict(data.allCategory.edges)
   let posts = data.allMarkdownRemark.nodes
 
-  //category renderer using recursive method
-  const CreateCategoryElement = ({childId, ...props}) => {
-    let c = categories[childId]
-    let filteredPost = posts.filter(post => post.frontmatter.category===c.name)
-    if(c.children !== null){      
-      return (<li>{c.name}
-        <ul>
-          {c.children.map(child => <CreateCategoryElement key={child.id} childId={child.id} />)}
-          <SidebarPostList withUlTag={false} data={filteredPost} />
-        </ul>
-      </li>)
-    }else{
-      return (<li>{c.name}<SidebarPostList data={filteredPost} /></li>)
-    }
-  }
-
   return (
-    <div className="sidebar-wrapper" >
-      <ul>
-        {Object.keys(categories).map(id => !categories[id].parent ? <CreateCategoryElement key={id} childId={id} /> : '' )}
-      </ul>
+    <div className="left fixed vertical menu ui large">
+      <div className="ui dividing large header my-primary" style={{padding: '14px 17px'}}>Siannas Blog</div>
+      <div >
+        {Object.keys(categories).map(id => !categories[id].parent ? <CreateCategoryElement categories={categories} posts={posts} key={id} childId={id} /> : '' )}
+      </div>
     </div>
   )
 }

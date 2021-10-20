@@ -5,6 +5,7 @@ import Bio from "../components/bio"
 import Layout from "../components/layout"
 import Sidebar from "../components/sidebar"
 import Seo from "../components/seo"
+import "semantic-ui-less/semantic.less"
 
 const BlogIndex = ({ data, location }) => {
   const siteTitle = data.site.siteMetadata?.title || `Title`
@@ -26,7 +27,7 @@ const BlogIndex = ({ data, location }) => {
 
   return (
     <Layout location={location} title={siteTitle}>
-      <Sidebar/>
+      <Sidebar/>    
       <Seo title="All posts" />
       <Bio />
       <ol style={{ listStyle: `none` }}>

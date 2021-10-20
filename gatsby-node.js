@@ -200,6 +200,14 @@ exports.sourceNodes = async ({ actions, createNodeId, createContentDigest }) => 
 
 }
 
+exports.onCreateWebpackConfig = ({ actions }) => {   
+  actions.setWebpackConfig({
+    resolve: {
+      alias: { "../../theme.config$": path.join(__dirname,  "src/semantic/theme.config")}
+    }
+  });
+ };
+
 // exports.createResolvers = ({ createResolvers }) => {
 //   // const resolvers = {
 //   //   Query: {

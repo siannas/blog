@@ -138,5 +138,6 @@ module.exports = {
         },
       },
     },
+    `gatsby-plugin-less`,
   ],
 }
