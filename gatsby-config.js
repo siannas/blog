@@ -139,5 +139,11 @@ module.exports = {
       },
     },
     `gatsby-plugin-less`,
+    {
+      resolve: `gatsby-source-wordpress`,
+      options: {
+        url: `http://localhost/blog-wp/graphql`, 
+      },
+    },
   ],
 }

@@ -32,7 +32,7 @@
 @emSize   : 14px;
 
 /* The size of page text  */
-@fontSize : 14px;
+@fontSize : 18px;
 
 
 /*-------------------
@@ -64,11 +64,11 @@
 @headerFontWeight : @bold;
 @headerLineHeight : unit((18 / 14), em);
 
-@h1 : unit((28 / 14), rem);
-@h2 : unit((24 / 14), rem);
-@h3 : unit((18 / 14), rem);
-@h4 : unit((15 / 14), rem);
-@h5 : unit((14 / 14), rem);
+@h1 : unit((36 / 18), rem);
+@h2 : unit((32 / 18), rem);
+@h3 : unit((26 / 18), rem);
+@h4 : unit((23 / 18), rem);
+@h5 : unit((22 / 18), rem);
 
 /*--------------
    Form Input
@@ -474,6 +474,7 @@
 @selectedBorderColor       : rgba(34, 36, 38, 0.35);
 @strongSelectedBorderColor : rgba(34, 36, 38, 0.5);
 @disabledBorderColor       : rgba(34, 36, 38, 0.5);
+@veryStrongBorderColor     : rgb(210 210 210);
 
 @solidInternalBorderColor  : #FAFAFA;
 @solidBorderColor          : #D4D4D5;

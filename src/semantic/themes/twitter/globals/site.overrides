@@ -20,3 +20,23 @@
     max-height: 1024px;
     transition: opacity 0.4s, visibility 0.4s, max-height 0.8s;
 }
+
+.ui.my-caption{
+    color: @inputPlaceholderColor;
+}
+
+[class*="right floated"] {
+  float: right;
+}
+
+.my-text[class*="right aligned"] {
+  text-align: right;
+}
+
+.my-text[class*="center aligned"] {
+  text-align: center;
+}
+
+.my-code-font {
+    font-family: ui-monospace,SFMono-Regular,SF Mono,Menlo,Consolas,Liberation Mono,monospace;
+}
