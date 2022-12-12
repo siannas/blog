@@ -1,7 +1,14 @@
 import React from "react"
-import { Link, graphql } from "gatsby"
+import { Link, graphql, useStaticQuery } from "gatsby"
 import Image from "gatsby-image"
-import parse from "html-react-parser"
+import parse, {domToReact} from "html-react-parser"
+import { CopyBlock, atomOneLight } from "react-code-blocks"
+import { GatsbyImage, getImage } from "gatsby-plugin-image"
+import Zoom from 'react-medium-image-zoom'
+import { Disqus, CommentCount } from 'gatsby-plugin-disqus'
+
+import styles from '../custom.scss';
+import 'react-medium-image-zoom/dist/styles.css'
 
 // We're using Gutenberg so we need the block styles
 // import "@wordpress/block-library/build-style/style.css"
@@ -9,17 +16,83 @@ import parse from "html-react-parser"
 
 import Bio from "../components/bio"
 import Layout from "../components/wp-layout"
-import SEO from "../components/seo"
+import Seo from "../components/seo"
 
-const BlogPostTemplate = ({ data: { previous, next, post } }) => {
+
+const options = {
+  replace: (domNode) => {
+    const { name, attribs, children, parent} = domNode;
+    // if(attribs) console.log("AYEEE "+attribs.class );
+    if (!attribs) {
+      return;
+    }
+    else if(name === 'figcaption')
+    {
+      return(
+        <figcaption>
+          {children[0].children[0].data}
+        </figcaption>
+      )
+    }
+    else if(name === 'picture')
+    {
+      return (
+        <>
+        {/* <div> */}
+        <Zoom>
+          {/* <img src="/static/6dacf7b2c4db85249eda1745ffb570ed/e9b55/profile-pic.png" width="500" /> */}
+          {domToReact(children)}
+        </Zoom>
+        {/* </div>   */}
+        </>
+      );
+    }
+    else if (attribs.class === 'wp-block-code') {
+      console.log(children);
+      return domToReact(children, options)
+      // const props = attributesToProps(domNode.attribs);
+      // return <div {...props} />;
+    }
+    else if (name === 'code') {
+      console.log(children)
+      return (<div className="ui segment my-code-font">
+        <CopyBlock
+          text={children[0].data}
+          language={"html"}
+          showLineNumbers={true}
+          startingLineNumber={1}
+          theme={atomOneLight}
+          // highlight={"1,2,3"}
+          customStyle={{
+            fontSize: '1rem',
+            fontFamily: 'monospace',
+            // borderRadius: '5px',
+            // boxShadow: '1px 2px 3px rgba(0,0,0,0.35)',
+          }}
+          codeBlock
+        />
+      </div>)
+    }
+  }
+};
+
+const BlogPostTemplate = ({ data: { previous, next, post, site } }) => {
   const featuredImage = {
     fluid: post.featuredImage?.node?.localFile?.childImageSharp?.fluid,
     alt: post.featuredImage?.node?.altText || ``,
   }
+  
+  let disqusConfig = {
+    url: `${site.siteMetadata.siteUrl+post.uri}`,
+    identifier: post.id,
+    title: post.title,
+  }
+
+  console.log("siteUrl "+site.siteMetadata.siteUrl+post.uri);
 
   return (
     <Layout>
-      <SEO title={post.title} description={post.excerpt} />
+      <Seo title={post.title} description={post.excerpt} />
 
       <article
         className="blog-post"
@@ -27,23 +100,28 @@ const BlogPostTemplate = ({ data: { previous, next, post } }) => {
         itemType="http://schema.org/Article"
       >
         <header>
-          <h1 itemProp="headline">{parse(post.title)}</h1>
-
-          <p>{post.date}</p>
-
-          {/* if we have a featured image for this post let's display it */}
           {featuredImage?.fluid && (
+            <div className="my-image-container">
             <Image
               fluid={featuredImage.fluid}
               alt={featuredImage.alt}
               style={{ marginBottom: 50 }}
             />
+            </div>
           )}
+          <h1 itemProp="headline">{parse(post.title)}</h1>
+
+          <p>{post.date}</p>
+
+          {/* if we have a featured image for this post let's display it */}
         </header>
 
         {!!post.content && (
-          <section itemProp="articleBody">{parse(post.content)}</section>
+          <section itemProp="articleBody">{parse(post.content, options)}</section>
         )}
+
+        <CommentCount config={disqusConfig} placeholder={'...'} />          
+        <Disqus config={disqusConfig} />
 
         <hr />
 
@@ -98,6 +176,7 @@ export const pageQuery = graphql`
       excerpt
       content
       title
+      uri
       date(formatString: "MMMM DD, YYYY")
       featuredImage {
         node {
@@ -121,6 +200,11 @@ export const pageQuery = graphql`
     next: wpPost(id: { eq: $nextPostId }) {
       uri
       title
+    }
+    site {
+      siteMetadata{
+        siteUrl
+      }
     }
   }
 `

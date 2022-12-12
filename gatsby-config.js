@@ -8,11 +8,13 @@ module.exports = {
     },
     description: `simple blog.`,
     // siteUrl: `https://gatsbystarterblogsource.gatsbyjs.io?/`,
+    siteUrl: `https://siannas.github.io/`,
     social: {
-      twitter: `kylemathews`,
+      twitter: `siannasGG1999`,
     },
   },
   plugins: [
+    `gatsby-plugin-sass`,
     `gatsby-plugin-image`,
     {
       resolve: `gatsby-source-filesystem`,
@@ -127,23 +129,31 @@ module.exports = {
     // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.dev/offline
     `gatsby-plugin-offline`,
-    {
-      resolve: `gatsby-source-graphql`,
-      options: {
-        typeName: `GitHub`,
-        fieldName: `github`,
-        url: `https://api.github.com/graphql`,
-        headers: {
-          Authorization: `Bearer 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`,
-        },
-      },
-    },
+    // {
+    //   resolve: `gatsby-source-graphql`,
+    //   options: {
+    //     typeName: `GitHub`,
+    //     fieldName: `github`,
+    //     url: `https://api.github.com/graphql`,
+    //     headers: {
+    //       Authorization: `Bearer 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`,
+    //     },
+    //   },
+    // },
     `gatsby-plugin-less`,
     {
       resolve: `gatsby-source-wordpress`,
       options: {
         url: `http://localhost/blog-wp/graphql`, 
+        createStaticFiles: true,
+        useGatsbyImage: false,
       },
+    },
+    {
+      resolve: `gatsby-plugin-disqus`,
+      options: {
+        shortname: `siannas`
+      }
     },
   ],
 }

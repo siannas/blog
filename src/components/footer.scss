@@ -1,0 +1,16 @@
+footer
+{
+    display: flex;
+    justify-content: space-between;
+    font-family: sans-serif;
+    font-size: 14px;
+    align-items: center;
+}
+
+.social-media
+{
+    & .social-icon{
+        width: 30px!important;
+        height: 30px!important;
+    }
+}

@@ -9,6 +9,7 @@ exports.createPages = async (gatsbyUtilities) => {
   // Define a template for blog post
   const blogPost = path.resolve(`./src/templates/blog-post.js`)
   const sandBox = path.resolve(`./src/templates/sand-box.js`)
+  const aboutPage = path.resolve(`./src/pages/about.js`)
 
   // Get all markdown blog posts sorted by date
   const result = await graphql(
@@ -73,9 +74,14 @@ exports.createPages = async (gatsbyUtilities) => {
   // If there are posts and pages, create Gatsby pages for them
   await createSinglePages({ wpPosts, gatsbyUtilities })
 
+  // createPage({
+  //   path: 'sandbox',
+  //   component: sandBox,
+  // })
+
   createPage({
-    path: 'sandbox',
-    component: sandBox,
+    path: 'about',
+    component: aboutPage,
   })
 }
 
