@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunksiannas_blog=self.webpackChunksiannas_blog||[]).push([[1438],{4703:function(a){function n(a){a.languages.arff={comment:/%.*/,string:{pattern:/(["'])(?:\\.|(?!\1)[^\\\r\n])*\1/,greedy:!0},keyword:/@(?:attribute|data|end|relation)\b/i,number:/\b\d+(?:\.\d+)?\b/,punctuation:/[{},]/}}a.exports=n,n.displayName="arff",n.aliases=[]}}]);
+//# sourceMappingURL=react-syntax-highlighter_languages_refractor_arff-1ebf7b940829f1c3efb2.js.map
