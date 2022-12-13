@@ -9,6 +9,7 @@ exports.createPages = async (gatsbyUtilities) => {
   // Define a template for blog post
   const blogPost = path.resolve(`./src/templates/blog-post.js`)
   const sandBox = path.resolve(`./src/templates/sand-box.js`)
+  const portfolioPage = path.resolve(`./src/pages/portfolio.js`)
   const aboutPage = path.resolve(`./src/pages/about.js`)
 
   // Get all markdown blog posts sorted by date
@@ -78,6 +79,11 @@ exports.createPages = async (gatsbyUtilities) => {
   //   path: 'sandbox',
   //   component: sandBox,
   // })
+
+  createPage({
+    path: 'portfolio',
+    component: portfolioPage,
+  })
 
   createPage({
     path: 'about',

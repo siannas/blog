@@ -10,6 +10,10 @@ const navs = [
         path: '/',
     },
     {
+        name: 'Portfolio',
+        path: '/portfolio',
+    },
+    {
         name: 'About',
         path: '/about',
     },
