@@ -25,7 +25,19 @@ const Layout = ({ isHomePage, children }) => {
   const [visible,setVisible] = React.useState(false);
 
   return (
-    <>    
+    <>
+    {/* <Script
+      src={`https://www.googletagmanager.com/gtag/js?id=${process.env.GTAG}`}
+      strategy="off-main-thread"
+    />
+    <Script id="gtag-config" strategy="off-main-thread" forward={[`gtag`]}>
+      {`
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments)};
+        gtag('js', new Date());
+        gtag('config', ${process.env.GTAG}, { page_path: location ? location.pathname + location.search + location.hash : undefined })
+      `}
+    </Script> */}
     <Navbar/>
     {/* <div className="r-0 t-0 si fixed" style={{zIndex:99}}>
       <button className="big compact primary icon ui left attached button"

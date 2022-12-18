@@ -1,6 +1,5 @@
 import * as React from "react"
 import { Link } from "gatsby"
-import { GatsbyImage, getImage } from "gatsby-plugin-image"
 import Zoom from 'react-medium-image-zoom'
 import Layout from "../components/wp-layout"
 import Seo from "../components/seo"

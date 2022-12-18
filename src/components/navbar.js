@@ -1,7 +1,7 @@
 import React from "react"
 import { Link } from "gatsby"
 import "./navbar.scss"
-import { SocialIcon } from "react-social-icons"
+import { ThemeToggler } from 'gatsby-plugin-dark-mode'
 
 const Navbar = () => {
 const navs = [
@@ -30,6 +30,17 @@ return (
         <span itemProp="nav">{name}</span>
     </Link>)
 )}
+<ThemeToggler>
+{({ theme, toggleTheme }) => (
+    <label>
+    <input
+        type="checkbox"
+        onChange={e => toggleTheme(e.target.checked ? 'dark' : 'light')}
+        checked={theme === 'dark'}
+    />
+    </label>
+)}
+</ThemeToggler>
 </div>
 </nav>
 )

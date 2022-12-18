@@ -55,11 +55,17 @@
   --fontSize-6: 2.488rem;
   --fontSize-7: 2.986rem;
   --color-primary: #005b99;
+  --color-bg: white;
   --color-text: #2e353f;
   --color-text-light: #4f5969;
   --color-heading: #1a202c;
   --color-heading-black: black;
   --color-accent: #d1dce5;
+  --colors-mauve1: hsl(246 6.0% 9.0%);
+  --colors-slate12: hsl(210 6.0% 93.0%);
+  --colors-gray11: hsl(0 0% 62.8%);
+  --social-media-bg: var(--color-bg);
+  --social-media-fg: var(--color-primary);
 }
 
 /* HTML elements */
@@ -77,10 +83,19 @@ html {
   -moz-osx-font-smoothing: grayscale;
 }
 
+body.dark {
+  --color-bg: var(--colors-mauve1);
+  --color-text: var(--colors-slate12);
+  --social-media-fg: var(--color-text);
+  --social-media-bg: var(--color-bg);
+  --color-heading: var(--color-text);
+}
+
 body {
   font-family: var(--font-body);
   font-size: var(--fontSize-1);
   color: var(--color-text);
+  background: var(--color-bg);
 }
 
 footer {
@@ -120,7 +135,7 @@ h6 {
 h1 {
   font-weight: var(--fontWeight-black);
   font-size: var(--fontSize-6);
-  color: var(--color-heading-black);
+  color: var(--color-heading);
 }
 
 h2 {

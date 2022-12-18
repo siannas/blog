@@ -14,10 +14,10 @@ return (
 <a href="https://www.gatsbyjs.com">Gatsby</a>
 </span>
 <div className="social-media">
-    <SocialIcon url="https://twitter.com/siannasGG1999" target={"_blank"} network="twitter" bgColor="#ffffff" fgColor="#005b99" />
-    <SocialIcon url="https://www.facebook.com/annas.nuriliman" target={"_blank"} network="facebook" bgColor="#ffffff" fgColor="#005b99" />
-    <SocialIcon url="https://www.instagram.com/annasinuril/" target={"_blank"} network="instagram" bgColor="#ffffff" fgColor="#005b99" />
-    <SocialIcon url="https://telegram.me/siannas" target={"_blank"} network="telegram" bgColor="#ffffff" fgColor="#005b99" />
+    <SocialIcon url="https://twitter.com/siannasGG1999" target={"_blank"} network="twitter" bgColor={"var(--social-media-bg)"} fgColor={"var(--social-media-fg)"} />
+    <SocialIcon url="https://www.instagram.com/annasinuril/" target={"_blank"} network="instagram" bgColor={"var(--social-media-bg)"} fgColor={"var(--social-media-fg)"} />
+    <SocialIcon url="https://telegram.me/siannas" target={"_blank"} network="telegram" bgColor={"var(--social-media-bg)"} fgColor={"var(--social-media-fg)"} />
+    <SocialIcon url="https://www.linkedin.com/in/annas-nuril-iman/?locale=en_US" target={"_blank"} network="linkedin" bgColor={"var(--social-media-bg)"} fgColor={"var(--social-media-fg)"} />
 </div>
 </footer>
 </>
