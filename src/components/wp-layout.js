@@ -6,6 +6,8 @@ import { Sidebar, Segment } from 'semantic-ui-react'
 import Navbar from "./navbar"
 import Footer from "./footer"
 
+import GlobalStateProvider from '../utils/global-context'
+
 const Layout = ({ isHomePage, children }) => {
   const {
     wp: {
@@ -22,10 +24,8 @@ const Layout = ({ isHomePage, children }) => {
     }
   `)
 
-  const [visible,setVisible] = React.useState(false);
-
   return (
-    <>
+    <GlobalStateProvider>
     {/* <Script
       src={`https://www.googletagmanager.com/gtag/js?id=${process.env.GTAG}`}
       strategy="off-main-thread"
@@ -75,7 +75,7 @@ const Layout = ({ isHomePage, children }) => {
       {/* </Segment> */}
     {/* </Sidebar.Pusher >
     </Sidebar.Pushable> */}
-    </>
+    </GlobalStateProvider>
   )
 }
 

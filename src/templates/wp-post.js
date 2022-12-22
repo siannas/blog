@@ -2,10 +2,12 @@ import React from "react"
 import { Link, graphql, useStaticQuery } from "gatsby"
 import Image from "gatsby-image"
 import parse, {domToReact} from "html-react-parser"
-import { CopyBlock, atomOneLight } from "react-code-blocks"
+import { CopyBlock, atomOneLight, atomOneDark, Code } from "react-code-blocks"
 import { GatsbyImage, getImage } from "gatsby-plugin-image"
 import Zoom from 'react-medium-image-zoom'
 import { Disqus, CommentCount } from 'gatsby-plugin-disqus'
+
+import { useGlobalState } from  '../utils/global-context'
 
 import styles from '../custom.scss';
 import 'react-medium-image-zoom/dist/styles.css'
@@ -17,6 +19,53 @@ import 'react-medium-image-zoom/dist/styles.css'
 import Bio from "../components/bio"
 import Layout from "../components/wp-layout"
 import Seo from "../components/seo"
+
+const CodeSection = (props) => {
+  const [state, dispatch] = useGlobalState()
+
+  console.log(state)
+
+  if(state.theme == 'dark')
+  {
+    return (<div className="ui segment my-code-font">
+      <CopyBlock
+        language={"typescript"}
+        showLineNumbers={true}
+        startingLineNumber={1}
+        theme={atomOneDark}
+        // highlight={"1,2,3"}
+        customStyle={{
+          fontSize: '1rem',
+          fontFamily: 'monospace',
+          // borderRadius: '5px',
+          // boxShadow: '1px 2px 3px rgba(0,0,0,0.35)',
+        }}
+  
+        codeBlock
+        {...props}
+      />
+    </div>)
+  }
+
+  return (<div className="ui segment my-code-font">
+      <CopyBlock
+        language={"typescript"}
+        showLineNumbers={true}
+        startingLineNumber={1}
+        theme={atomOneLight}
+        // highlight={"1,2,3"}
+        customStyle={{
+          fontSize: '1rem',
+          fontFamily: 'monospace',
+          // borderRadius: '5px',
+          // boxShadow: '1px 2px 3px rgba(0,0,0,0.35)',
+        }}
+  
+        codeBlock
+        {...props}
+      />
+  </div>)
+}
 
 
 const options = {
@@ -48,30 +97,12 @@ const options = {
       );
     }
     else if (attribs.class === 'wp-block-code') {
-      console.log(children);
       return domToReact(children, options)
       // const props = attributesToProps(domNode.attribs);
       // return <div {...props} />;
     }
     else if (name === 'code') {
-      console.log(children)
-      return (<div className="ui segment my-code-font">
-        <CopyBlock
-          text={children[0].data}
-          language={"html"}
-          showLineNumbers={true}
-          startingLineNumber={1}
-          theme={atomOneLight}
-          // highlight={"1,2,3"}
-          customStyle={{
-            fontSize: '1rem',
-            fontFamily: 'monospace',
-            // borderRadius: '5px',
-            // boxShadow: '1px 2px 3px rgba(0,0,0,0.35)',
-          }}
-          codeBlock
-        />
-      </div>)
+      return ( <CodeSection text={children[0].data} /> )
     }
   }
 };
