@@ -1,7 +1,6 @@
 import React from "react"
 import { Link, useStaticQuery, graphql } from "gatsby"
 import parse from "html-react-parser"
-import Tes from "./tes"
 import { Sidebar, Segment } from 'semantic-ui-react'
 import Navbar from "./navbar"
 import Footer from "./footer"

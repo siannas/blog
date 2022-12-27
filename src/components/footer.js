@@ -11,7 +11,7 @@ return (
 <span>
 © {new Date().getFullYear()}, Built with
 {` `}
-<a href="https://www.gatsbyjs.com">Gatsby</a>
+<Link to="https://www.gatsbyjs.com">Gatsby</Link>
 </span>
 <div className="social-media">
     <SocialIcon url="https://twitter.com/siannasGG1999" target={"_blank"} network="twitter" bgColor={"var(--social-media-bg)"} fgColor={"var(--social-media-fg)"} />

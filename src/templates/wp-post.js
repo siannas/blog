@@ -1,9 +1,9 @@
 import React from "react"
 import { Link, graphql, useStaticQuery } from "gatsby"
 import Image from "gatsby-image"
-import parse, {domToReact} from "html-react-parser"
+import parse, {domToReact, attributesToProps } from "html-react-parser"
 import { CopyBlock, atomOneLight, atomOneDark, Code } from "react-code-blocks"
-import { GatsbyImage, getImage } from "gatsby-plugin-image"
+import { GatsbyImage, getSrc } from "gatsby-plugin-image"
 import Zoom from 'react-medium-image-zoom'
 import { Disqus, CommentCount } from 'gatsby-plugin-disqus'
 
@@ -22,8 +22,6 @@ import Seo from "../components/seo"
 
 const CodeSection = (props) => {
   const [state, dispatch] = useGlobalState()
-
-  console.log(state)
 
   if(state.theme == 'dark')
   {
@@ -71,7 +69,8 @@ const CodeSection = (props) => {
 const options = {
   replace: (domNode) => {
     const { name, attribs, children, parent} = domNode;
-    // if(attribs) console.log("AYEEE "+attribs.class );
+    const props = attributesToProps(attribs);
+    
     if (!attribs) {
       return;
     }
@@ -86,21 +85,53 @@ const options = {
     else if(name === 'picture')
     {
       return (
-        <>
-        {/* <div> */}
         <Zoom>
-          {/* <img src="/static/6dacf7b2c4db85249eda1745ffb570ed/e9b55/profile-pic.png" width="500" /> */}
           {domToReact(children)}
         </Zoom>
-        {/* </div>   */}
-        </>
       );
     }
-    else if (attribs.class === 'wp-block-code') {
-      return domToReact(children, options)
-      // const props = attributesToProps(domNode.attribs);
-      // return <div {...props} />;
+    else if(name === 'img' && props.loading && props.loading=='lazy')
+    {
+      
+
+      // delete props.sizes
+
+      console.log(props);
+
+      // const image = getSrc(props.src)
+
+      // console.log(image);
+
+      return (
+        <>
+          <div style={{
+              width: '100%',
+              display: 'flex',
+              justifyContent: 'center',
+            }}>
+          <div style={{
+              maxWidth: '100%', 
+              width: props.width+'px', 
+              height: 'auto',
+              position: 'relative',
+              aspectRatio: 'auto '+props.width+' / '+props.height,
+            }}>
+          <Zoom>
+            <img {...props} />
+          </Zoom>
+          </div>
+          </div>
+        </>
+      );
+      //   {/* <GatsbyImage image={image} alt={props.alt} /> */}
+      //   {/* <Image {...props}  /> */}
+      //   // </GatsbyImage>
     }
+    // else if (attribs.class === 'wp-block-code') {
+    //   return domToReact(children, options)
+    //   // const props = attributesToProps(domNode.attribs);
+    //   // return <div {...props} />;
+    // }
     else if (name === 'code') {
       return ( <CodeSection text={children[0].data} /> )
     }
@@ -118,8 +149,6 @@ const BlogPostTemplate = ({ data: { previous, next, post, site } }) => {
     identifier: post.id,
     title: post.title,
   }
-
-  console.log("siteUrl "+site.siteMetadata.siteUrl+post.uri);
 
   return (
     <Layout>

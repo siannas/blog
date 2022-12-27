@@ -149,7 +149,7 @@ module.exports = {
       resolve: `gatsby-source-wordpress`,
       options: {
         url: `http://localhost/blog-wp/graphql`, 
-        createStaticFiles: true,
+        createStaticFiles: false,
         useGatsbyImage: false,
       },
     },

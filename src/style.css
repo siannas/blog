@@ -338,6 +338,15 @@ figure.aligncenter {
   text-align: center;
 }
 
+[data-rmiz-modal-overlay="visible"] {
+  background-color: var(--color-bg)!important;
+}
+
+.wp-block-image img {
+  max-width: 100%!important;
+  height: auto!important;
+}
+
 /* Media queries */
 
 @media (max-width: 42rem) {

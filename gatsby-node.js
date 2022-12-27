@@ -64,6 +64,16 @@ exports.createPages = async (gatsbyUtilities) => {
     })
   }
 
+  createPage({
+    path: 'portfolio',
+    component: portfolioPage,
+  })
+
+  createPage({
+    path: 'about',
+    component: aboutPage,
+  })
+
   // Query our posts from the GraphQL server
   const wpPosts = await getNodes(gatsbyUtilities)
 
@@ -79,16 +89,6 @@ exports.createPages = async (gatsbyUtilities) => {
   //   path: 'sandbox',
   //   component: sandBox,
   // })
-
-  createPage({
-    path: 'portfolio',
-    component: portfolioPage,
-  })
-
-  createPage({
-    path: 'about',
-    component: aboutPage,
-  })
 }
 
 exports.onCreateNode = ({ node, actions, getNode }) => {

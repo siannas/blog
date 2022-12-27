@@ -34,12 +34,12 @@ React.useEffect(() => {
 
 return (
 <nav className="navbar">
-<Link to="/" itemProp="url">
+<Link to="/" itemProp="url" key={"home"}>
     Sianas
 </Link>
 <div>
 {navs.map(({name, path})=> (
-    <Link to={path} itemProp="url">
+    <Link to={path} itemProp="url" key={name}>
         <span itemProp="nav">{name}</span>
     </Link>)
 )}
