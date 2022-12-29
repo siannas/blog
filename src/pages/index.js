@@ -1,5 +1,6 @@
 import * as React from "react"
 import { Link, graphql } from "gatsby"
+import { GatsbyImage, getImage } from "gatsby-plugin-image"
 
 import Bio from "../components/bio"
 import Layout from "../components/wp-layout"
@@ -7,6 +8,10 @@ import Sidebar from "../components/sidebar"
 import Seo from "../components/seo"
 // import "semantic-ui-less/semantic.less"
 import "../custom.scss"
+
+const tag_color = {
+  "Tuts": "--color-tag-orange"
+}
 
 const BlogIndex = ({ data, location }) => {
   const siteTitle = `Title`
@@ -37,6 +42,28 @@ const BlogIndex = ({ data, location }) => {
         {posts.map(({ previous, post, next }) => {
           const title = post.title
 
+          /// note: Create featured image banner 
+          var featuredImage = null
+          if(post.featuredImage)
+          {
+            const image = getImage(post.featuredImage.node.localFile)
+            featuredImage = (<div className="featured-image">
+                              <GatsbyImage image={image} alt={post.featuredImage.node.altText}/>
+                            </div>)
+          }
+
+          /// note: Create tags
+          var tagsSection = null
+          
+          if(post.tags.nodes.length > 0)
+          {
+            var tags = post.tags.nodes.map( t => {
+              var backgroundColor = (tag_color[t.name]) ? tag_color[t.name] : '--color-primary'
+              return (<li key={t.name}><span className="tag" style={{backgroundColor: 'var('+backgroundColor+')'}}>{t.name}</span></li>)
+            })
+            tagsSection = (<ul className="tag-list">{tags}</ul>) 
+          }
+
           return (
             <li key={post.uri}>
               <article
@@ -51,6 +78,8 @@ const BlogIndex = ({ data, location }) => {
                     </Link>
                   </h2>
                   <small>{post.date}</small>
+                  <>{ tagsSection }</>
+                  <>{ featuredImage }</>
                 </header>
                 <section>
                   <p
@@ -112,6 +141,25 @@ export const pageQuery = graphql`
           date(formatString: "MMMM DD, YYYY")
           id
           uri
+          tags {
+            nodes {
+              id
+              name
+            }
+          }
+          featuredImage {
+            node {
+              altText
+              localFile{
+                childImageSharp {
+                  gatsbyImageData(
+                    placeholder: BLURRED
+                    formats: [AUTO]
+                  )
+                }       
+              }
+            }
+          }
         }
         next {
           id

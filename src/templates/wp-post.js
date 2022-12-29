@@ -160,7 +160,7 @@ const BlogPostTemplate = ({ data: { previous, next, post, site } }) => {
         itemType="http://schema.org/Article"
       >
         <header>
-          {featuredImage?.fluid && (
+          {/* {featuredImage?.fluid && (
             <div className="my-image-container">
             <Image
               fluid={featuredImage.fluid}
@@ -168,7 +168,7 @@ const BlogPostTemplate = ({ data: { previous, next, post, site } }) => {
               style={{ marginBottom: 50 }}
             />
             </div>
-          )}
+          )} */}
           <h1 itemProp="headline">{parse(post.title)}</h1>
 
           <p>{post.date}</p>

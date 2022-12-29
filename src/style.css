@@ -66,6 +66,7 @@
   --colors-gray11: hsl(0 0% 62.8%);
   --social-media-bg: var(--color-bg);
   --social-media-fg: var(--color-primary);
+  --color-tag-orange: #e69503;
 }
 
 /* HTML elements */
@@ -345,6 +346,59 @@ figure.aligncenter {
 .wp-block-image img {
   max-width: 100%!important;
   height: auto!important;
+}
+
+.featured-image {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 2.5;
+  position: relative;
+  overflow: hidden;
+  margin-top: 12px;
+}
+
+.featured-image .gatsby-image-wrapper {
+  position: absolute;
+  width: 150%;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+.tag-list {
+  list-style: none;
+  margin: 8px 0 4px 0;
+  gap: 4px;
+  -webkit-box-align: center;
+  align-items: center;
+  padding: 0px;
+  padding-inline: 0px;
+  display: flex;
+}
+
+.tag-list li {
+  margin-bottom: 0!important;
+}
+
+.tag-list .tag {
+  border-width: 1px;
+  border-radius: 999px;
+  border-style: solid;
+  font-size: 10px;
+  line-height: 1;
+  white-space: nowrap;
+  height: 24px;
+  padding: 0px 10px;
+  display: inline-flex;
+  -webkit-box-align: center;
+  align-items: center;
+  gap: 4px;
+  background-color: var(--color-primary);
+  border-color: transparent;
+  font-weight: 400;
+  font-family: sans-serif;
+  color: var(--colors-slate12);
 }
 
 /* Media queries */
