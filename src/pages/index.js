@@ -9,8 +9,13 @@ import Seo from "../components/seo"
 // import "semantic-ui-less/semantic.less"
 import "../custom.scss"
 
-const tag_color = {
-  "Tuts": "--color-tag-orange"
+import FlagIcon from "../svg-components/flag"
+
+const tags_data = {
+  "Tuts": {
+    "color" : "--color-tag-orange",
+    "icon" : (<FlagIcon/>),
+  }
 }
 
 const BlogIndex = ({ data, location }) => {
@@ -58,8 +63,9 @@ const BlogIndex = ({ data, location }) => {
           if(post.tags.nodes.length > 0)
           {
             var tags = post.tags.nodes.map( t => {
-              var backgroundColor = (tag_color[t.name]) ? tag_color[t.name] : '--color-primary'
-              return (<li key={t.name}><span className="tag" style={{backgroundColor: 'var('+backgroundColor+')'}}>{t.name}</span></li>)
+              var backgroundColor = (tags_data[t.name]) ? tags_data[t.name].color : '--color-primary'
+              var tagIcon = (tags_data[t.name] && tags_data[t.name].icon) ? tags_data[t.name].icon : ''
+              return (<li key={t.name}><span className="tag" style={{backgroundColor: 'var('+backgroundColor+')'}}>{tagIcon}{t.name}</span></li>)
             })
             tagsSection = (<ul className="tag-list">{tags}</ul>) 
           }

@@ -43,6 +43,7 @@
     "react-helmet": "^6.1.0",
     "react-medium-image-zoom": "^5.1.2",
     "react-perfect-scrollbar": "^1.5.8",
+    "react-scroll-slider": "^1.0.1",
     "react-social-icons": "^5.15.0",
     "sass": "^1.52.1",
     "semantic-ui-less": "^2.4.1",

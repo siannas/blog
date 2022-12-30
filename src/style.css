@@ -54,7 +54,7 @@
   --fontSize-5: 2.074rem;
   --fontSize-6: 2.488rem;
   --fontSize-7: 2.986rem;
-  --color-primary: #005b99;
+  --color-primary: #0089e6; /*#005b99;*/
   --color-bg: white;
   --color-text: #2e353f;
   --color-text-light: #4f5969;
@@ -96,6 +96,14 @@ body {
   font-family: var(--font-body);
   font-size: var(--fontSize-1);
   color: var(--color-text);
+  background: var(--color-bg);
+  overflow-x: hidden;
+}
+
+nav.navbar {
+  position: fixed;
+  width: 100vw;
+  z-index: 9999;
   background: var(--color-bg);
 }
 
@@ -399,6 +407,36 @@ figure.aligncenter {
   font-weight: 400;
   font-family: sans-serif;
   color: var(--colors-slate12);
+}
+
+.tag-list .tag::before {
+  content: '';
+}
+
+.sticky {
+  position: sticky!important;
+  top: 0;
+}
+
+
+/* custom scrollbar */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #d3d3d3;
+  border-radius: 20px;
+  border: 0px solid transparent;
+  background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #a8bbbf;
 }
 
 /* Media queries */
