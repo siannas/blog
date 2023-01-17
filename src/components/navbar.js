@@ -28,7 +28,11 @@ const [state, dispatch] = useGlobalState()
 
 React.useEffect(() => {
     var cur_theme = localStorage.getItem('theme')
-    if(!cur_theme) cur_theme = 'dark'
+    if(!cur_theme)
+    {
+        cur_theme = 'dark'
+        localStorage.setItem('theme', cur_theme)
+    }
     dispatch({theme: cur_theme})
 }, []);
 

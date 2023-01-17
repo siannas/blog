@@ -1,3 +1,7 @@
 .tags a{
     margin-left: 5px;
 }
+
+.portfolio-text > p {
+    max-width: 820px;
+}

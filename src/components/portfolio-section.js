@@ -37,9 +37,9 @@ const PortfolioSection = ({data}) => {
 
         if(isChanging)
         {
-            // const yPos = myref.offsetTop+myref.offsetHeight/3
-            // window.scrollTo(0,yPos)
-            // window.PrevScrollPos = yPos
+            const yPos = myref.offsetTop+myref.offsetHeight/3
+            window.scrollTo(0,yPos)
+            window.PrevScrollPos = yPos
             return;
         }
 
