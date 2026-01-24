@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:media="http://search.yahoo.com/mrss/">
+  <channel>
+    <title><![CDATA[My Digital Garden - Notes]]></title>
+    <link></link>
+    <description><![CDATA[A collection of thoughts, ideas, and discoveries from my journey in technology and beyond.]]></description>
+    <lastBuildDate>Sat, 24 Jan 2026 14:14:33 GMT</lastBuildDate>
+    <language>en</language>
+    <generator>My Digital Garden RSS Generator</generator>
+    <item>
+      <title><![CDATA[Start Off Machine-Learning Study Through JAX Library]]></title>
+      <link>/notes/1768700608_start_off_jax_lib_study</link>
+      <description><![CDATA[My Own Note of Getting Started with JAX for Machine Learning.]]></description>
+      <pubDate>Sat, 24 Jan 2026 14:14:33 GMT</pubDate>
+      <guid>/notes/1768700608_start_off_jax_lib_study</guid>
+    <category><![CDATA[ai]]></category>
+    <category><![CDATA[ml]]></category>
+    <category><![CDATA[jax]]></category>
+    <category><![CDATA[python]]></category>
+    </item>
+    <item>
+      <title><![CDATA[My Favorite Place to Generate AI Images &amp; Videos (For Free!)]]></title>
+      <link>/notes/1759044519_my_favorite_place_to_generate_ai_images_and_videos_for_free</link>
+      <description><![CDATA[My Favorite Place to Generate AI Images &amp; Videos (For Free!).]]></description>
+      <pubDate>Sat, 24 Jan 2026 14:14:33 GMT</pubDate>
+      <guid>/notes/1759044519_my_favorite_place_to_generate_ai_images_and_videos_for_free</guid>
+    <category><![CDATA[ai]]></category>
+    <category><![CDATA[ai image]]></category>
+    <category><![CDATA[ai video]]></category>
+    <category><![CDATA[free]]></category>
+    </item>
+    <item>
+      <title><![CDATA[Happy Glass Clone pt.2]]></title>
+      <link>/notes/1645965974_happy_glass_clone_pt2</link>
+      <description><![CDATA[A tutorial to create a happy glass game clone.]]></description>
+      <pubDate>Sat, 24 Jan 2026 14:14:33 GMT</pubDate>
+      <guid>/notes/1645965974_happy_glass_clone_pt2</guid>
+      <media:content url="top_3_games_2025.jpg" type="image/jpeg" />
+      <meta_image_src><![CDATA[top_3_games_2025.jpg]]></meta_image_src>
+    <category><![CDATA[gamedev]]></category>
+    <category><![CDATA[tutorial]]></category>
+    </item>
+    <item>
+      <title><![CDATA[Happy Glass Clone pt.1]]></title>
+      <link>/notes/1645533974_happy_glass_clone_pt1</link>
+      <description><![CDATA[A tutorial to create a happy glass game clone.]]></description>
+      <pubDate>Sat, 24 Jan 2026 14:14:33 GMT</pubDate>
+      <guid>/notes/1645533974_happy_glass_clone_pt1</guid>
+      <media:content url="top_3_games_2025.jpg" type="image/jpeg" />
+      <meta_image_src><![CDATA[top_3_games_2025.jpg]]></meta_image_src>
+    <category><![CDATA[gamedev]]></category>
+    <category><![CDATA[tutorial]]></category>
+    </item>
+  </channel>
+</rss>
